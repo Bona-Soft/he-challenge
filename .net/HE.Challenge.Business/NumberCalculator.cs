@@ -1,0 +1,50 @@
+﻿namespace HE.Challenge.Business
+{
+    public class NumberCalculator : INumberCalculator
+    {
+
+        public int[]? SumValuesFromArraysReversingSecond(int[]? arrayX, int[]? arrayY)
+        {
+            if (arrayX == null || arrayX.Length == 0) return arrayY ?? arrayX;
+            if (arrayY == null || arrayY.Length == 0) return arrayX;
+
+
+            Array.Reverse(arrayY);
+
+            return SumArraysReversingSecond(arrayX, arrayY);
+        }
+
+        private SummArray()
+        private int[] SumArraysReversingSecond(int[] arrayX, int[] arrayY)
+        {
+            //Identify which array is longest.
+            var lengthResult = Math.Max(arrayX.Length, arrayY.Length);
+            var result = new int[lengthResult];
+            var ArrayYLastIndex = arrayY.Length - 1;
+
+            //Based on arrayX I iterate and sum all the values in this array
+            //with arrayY reversed logically.
+            for (int i = 0; i < arrayX.Length; i++)
+            {
+                result[i] = arrayX[i];
+                if (ArrayYLastIndex - i >= 0)
+                {
+                    result[i] += arrayY[ArrayYLastIndex - i];
+                }
+            }
+
+            //I check if the result still contains values to add from the arrayY.
+            //If so, I iterate only the remaining values of arrayY from the last index used of arrayX
+            if (lengthResult == arrayY.Length)
+            {
+                for (int i = 0; i < arrayY.Length - arrayX.Length; i++)
+                {
+                    result[arrayX.Length + i] = arrayY[arrayX.Length - 1 - i];
+                }
+            }
+
+            return result;
+        }
+
+    }
+}
